@@ -26,7 +26,7 @@ select opt in "${options[@]}"; do
   		echo -e "Enter the username (Default: Apple) / Введите имя пользователя (Стандартное: Apple)"
 		read realName
   		realName="${realName:= Apple}"
-    	echo -e "${BLUE}Nhận username ${RED}WRITE WITHOUT SPACES / ВВОДИТЬ БЕЗ ПРОБЕЛОВ"
+    	echo -e "${BLUE}Write username/Введите имя пользователя ${RED}WRITE WITHOUT SPACES / ВВОДИТЬ БЕЗ ПРОБЕЛОВ"
       	read username
 		username="${username:=Apple}"
   		echo -e "${BLUE}Enter the password (default: 1234) / Придумайте пароль (Стандартный пароль: 1234)"
