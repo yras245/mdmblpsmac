@@ -7,8 +7,6 @@ PUR='\033[1;35m'
 CYAN='\033[1;36m'
 NC='\033[0m'
 
-# Set the password
-PASSWORD="xros1985"
 
 echo -e "${CYAN}*-------------------*---------------------*${NC}"
 echo -e "${RED}*          Mac MDM Bypass          *${NC}"
@@ -16,15 +14,6 @@ echo -e "${RED}*            By WINS94                *${NC}"
 echo -e "${CYAN}*-------------------*---------------------*${NC}"
 echo ""
 
-# Function to check password
-check_password() {
-    read -s -p "Enter the password:/Введите пароль " entered_password
-    echo ""
-    if [ "$entered_password" != "$PASSWORD" ]; then
-        echo -e "${RED}Incorrect password. Exiting.${NC}"
-        exit 1
-    fi
-}
 
 PS3=‘Choose option (Виберете действие) '
 options=("AutoBypass(Автоматический обход)" "Reboot")
