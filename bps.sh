@@ -12,7 +12,7 @@ echo -e "${RED}*          Mac MDM Bypass          *${NC}"
 echo -e "${RED}*            By WINS94                *${NC}"
 echo -e "${CYAN}*-------------------*---------------------*${NC}"
 echo ""
-PS3=‘Choose option (Виберете действие) '
+PS3=‘Choose option Виберете действие '
 options=("AutoBypass(Автоматический обход)" "Reboot")
 select opt in "${options[@]}"; do
 	case $opt in
