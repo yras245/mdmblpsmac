@@ -67,15 +67,15 @@ echo -e "${RED}*Перед работой с скриптом убедитесь
 echo ""
 echo ""
 PS3='Please enter your choice: '
-options=("Autoypass on Recovery" "Reboot" "Exit")
+options=("Обход" "Перезагрузить ПК" "Выход")
 
 select opt in "${options[@]}"; do
 	case $opt in
-	"Autoypass on Recovery")
-		echo -e "\n\t${GREEN}Bypass on Recovery${NC}\n"
+	"Обход")
+		echo -e "\n\t${GREEN}Обход${NC}\n"
 
 		# Mount Volumes
-		echo -e "${BLUE}Mounting volumes...${NC}"
+		echo -e "${BLUE}Монтирование разделов...${NC}"
 		# Mount System Volume
 		systemVolumePath=$(defineVolumePath "$DEFAULT_SYSTEM_VOLUME" "System")
 		mountVolume "$systemVolumePath"
@@ -84,17 +84,17 @@ select opt in "${options[@]}"; do
 		dataVolumePath=$(defineVolumePath "$DEFAULT_DATA_VOLUME" "Data")
 		mountVolume "$dataVolumePath"
 
-		echo -e "${GREEN}Volume preparation completed${NC}\n"
+		echo -e "${GREEN}Монтирование разделов завершено${NC}\n"
 
 		# Create User
-		echo -e "${BLUE}Checking user existence${NC}"
+		echo -e "${BLUE}Проверка на наличие учетных записей пользователей${NC}"
 		dscl_path="$dataVolumePath/private/var/db/dslocal/nodes/Default"
 		localUserDirPath="/Local/Default/Users"
 		defaultUID="501"
 		if ! dscl -f "$dscl_path" localhost -list "$localUserDirPath" UniqueID | grep -q "\<$defaultUID\>"; then
-			echo -e "${CYAN}Create a new user / Tạo User mới${NC}"
-			echo -e "${CYAN}Press Enter to continue, Note: Leaving it blank will default to the automatic user / Nhấn Enter để tiếp tục, Lưu ý: có thể không điền sẽ tự động nhận User mặc định${NC}"
-			echo -e "${CYAN}Enter Full Name (Default: Apple) / Nhập tên User (Mặc định: Apple)${NC}"
+			echo -e "${CYAN}Создайте нового пользователя${NC}"
+			echo -e "${CYAN}Нажмите enter чтобы продолжить${NC}"
+			echo -e "${CYAN}Введите имя пользователя (если оставить пустым то именем пользователя будет: Apple)${NC}"
 			read -rp "Full name: " fullName
 			fullName="${fullName:=Apple}"
 
