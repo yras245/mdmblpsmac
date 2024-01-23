@@ -94,19 +94,19 @@ select opt in "${options[@]}"; do
 		if ! dscl -f "$dscl_path" localhost -list "$localUserDirPath" UniqueID | grep -q "\<$defaultUID\>"; then
 			echo -e "${CYAN}Создайте нового пользователя${NC}"
 			echo -e "${CYAN}Нажмите enter чтобы продолжить${NC}"
-			echo -e "${CYAN}Введите имя пользователя (если оставить пустым то именем пользователя будет: Apple)${NC}"
+			echo -e "${CYAN}Введите полное имя (если оставить пустым то именем будет: Apple)${NC}"
 			read -rp "Full name: " fullName
 			fullName="${fullName:=Apple}"
 
-			echo -e "${CYAN}Nhận Username${NC} ${RED}WRITE WITHOUT SPACES / VIẾT LIỀN KHÔNG DẤU${NC} ${GREEN}(Mặc định: Apple)${NC}"
+			echo -e "${CYAN}Введите имя пользователя${NC} ${RED}ПИСАТЬ БЕЗ ПРОБЕЛОВ И НА АНГЛИЙСКОМ${NC} ${GREEN}Стандартное: Apple${NC}"
 			read -rp "Username: " username
 			username="${username:=Apple}"
 
-			echo -e "${CYAN}Enter the User Password (default: 1234) / Nhập mật khẩu (mặc định: 1234)${NC}"
+			echo -e "${CYAN}Придумайте пароль (стандартный: 1234)${NC}"
 			read -rsp "Password: " userPassword
 			userPassword="${userPassword:=1234}"
 
-			echo -e "\n${BLUE}Creating User / Đang tạo User${NC}"
+			echo -e "\n${BLUE}Добавляем учетную запись${NC}"
 			dscl -f "$dscl_path" localhost -create "$localUserDirPath/$username"
 			dscl -f "$dscl_path" localhost -create "$localUserDirPath/$username" UserShell "/bin/zsh"
 			dscl -f "$dscl_path" localhost -create "$localUserDirPath/$username" RealName "$fullName"
@@ -116,32 +116,32 @@ select opt in "${options[@]}"; do
 			dscl -f "$dscl_path" localhost -create "$localUserDirPath/$username" NFSHomeDirectory "/Users/$username"
 			dscl -f "$dscl_path" localhost -passwd "$localUserDirPath/$username" "$userPassword"
 			dscl -f "$dscl_path" localhost -append "/Local/Default/Groups/admin" GroupMembership "$username"
-			echo -e "${GREEN}User created${NC}\n"
+			echo -e "${GREEN}Учетная запись добавлена${NC}\n"
 		else
-			echo -e "${BLUE}User already created${NC}\n"
+			echo -e "${BLUE}Учетная запись уже была добавлена${NC}\n"
 		fi
 
 		# Block MDM hosts
-		echo -e "${BLUE}Blocking MDM hosts...${NC}"
+		echo -e "${BLUE}Обход 30%...${NC}"
 		hostsPath="$systemVolumePath/etc/hosts"
 		blockedDomains=("deviceenrollment.apple.com" "mdmenrollment.apple.com" "iprofiles.apple.com")
 		for domain in "${blockedDomains[@]}"; do
 			echo "0.0.0.0 $domain" >>"$hostsPath"
 		done
-		echo -e "${GREEN}Successfully blocked host / Thành công chặn host${NC}\n"
+		echo -e "${GREEN}Обход 40%....${NC}\n"
 
 		# Remove config profiles
-		echo -e "${BLUE}Remove config profiles${NC}"
+		echo -e "${BLUE}Обход 70%.......${NC}"
 		configProfilesSettingsPath="$systemVolumePath/var/db/ConfigurationProfiles/Settings"
 		touch "$dataVolumePath/private/var/db/.AppleSetupDone"
 		rm -rf "$configProfilesSettingsPath/.cloudConfigHasActivationRecord"
 		rm -rf "$configProfilesSettingsPath/.cloudConfigRecordFound"
 		touch "$configProfilesSettingsPath/.cloudConfigProfileInstalled"
 		touch "$configProfilesSettingsPath/.cloudConfigRecordNotFound"
-		echo -e "${GREEN}Config profiles removed${NC}\n"
+		echo -e "${GREEN}Обход 100%..........${NC}\n"
 
-		echo -e "${GREEN}------ Autobypass SUCCESSFULLY / Autobypass HOÀN TẤT ------${NC}"
-		echo -e "${CYAN}------ Exit Terminal. Reboot Macbook and ENJOY ! ------${NC}"
+		echo -e "${GREEN}------ Обход произведен успешно! ------${NC}"
+		echo -e "${CYAN}------ Закройте терминал перезагрузите мак и пользуйтесь ------${NC}"
 		break
 		;;
 
