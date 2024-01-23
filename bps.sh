@@ -64,7 +64,9 @@ echo -e "${RED}*             UO5OQ.COM                 *${NC}"
 echo -e "${RED}*              wins94                    *${NC}"
 echo -e "${CYAN}*-------------------*---------------------*${NC}"
 echo ""
-PS3='Перед работой с скриптом убедитесь что ваш диск переименован в Macintosh HD а раздел с данными в Macintosh HD - Data'
+echo -e "${RED}*Перед работой с скриптом убедитесь что ваш диск переименован в Macintosh HD а раздел с данными в Macintosh HD - Data*${NC}"
+echo ""
+echo ""
 PS3='Please enter your choice: '
 options=("Autoypass on Recovery" "Reboot" "Exit")
 
